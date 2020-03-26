@@ -437,7 +437,6 @@
 
     var aesjs = {
         AES: AES,
-        Counter: Counter,
 
         ModeOfOperation: {
             ofb: ModeOfOperationOFB,
