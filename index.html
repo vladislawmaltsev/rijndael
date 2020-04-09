@@ -8,6 +8,55 @@
     <script type="text/javascript" src="index.js"></script>
 </head>
 <body>
+    <div><input type="text" id="text" style="width: 30%; " placeholder="Plaintext"/></div>
+    <div><input type="text" id="key" style="width: 30%; " placeholder="Key"/></div>
+    <div><input type="text" id="iv" style="width: 30%; " placeholder="iv"/></div>
     
+    <input type="button" id="encrypt" value="Encrypt OFB"/>
+    <input type="button" id="decrypt" value="Decrypt"/>
+
+    <input type="button" id="encrypt" value="Encrypt ECB"/>
+    <input type="button" id="decrypt" value="Decrypt"/>
+    <script type="text/javascript"> 
+
+
+        function hexToBytes(hex) {
+            for (var bytes = [], c = 0; c < hex.length; c += 2)
+            bytes.push(parseInt(hex.substr(c, 2), 16));
+            return bytes;
+        }
+
+        var encryptedHex1;
+
+        function encryptText() {
+            var key1 = document.getElementById("key").value;
+            var key = hexToBytes(key1);
+            var iv1 = document.getElementById("iv").value;
+            var iv = aesjs.utils.hex.toBytes(iv1);
+            var text = document.getElementById("text").value;
+            var aesOfb = new aesjs.ModeOfOperation.ofb(key, iv);
+            var textBytes = aesjs.utils.hex.toBytes(text);
+            var encryptedBytes = aesOfb.encrypt(textBytes);
+            var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+            alert(encryptedHex);
+            encryptedHex1 = aesjs.utils.hex.fromBytes(encryptedBytes);
+        }
+
+        document.getElementById("encrypt").onclick = encryptText;
+        
+        function decryptText() {
+            var key1 = document.getElementById("key").value;
+            var key = hexToBytes(key1);
+            var iv1 = document.getElementById("iv").value;
+            var iv = aesjs.utils.hex.toBytes(iv1);
+            var encryptedBytes = aesjs.utils.hex.toBytes(encryptedHex1);
+            var aesOfb = new aesjs.ModeOfOperation.ofb(key, iv);
+            var decryptedBytes = aesOfb.decrypt(encryptedBytes);
+            var decryptedText = aesjs.utils.hex.fromBytes(decryptedBytes);
+            console.log (decryptedText);
+        }
+
+        document.getElementById("decrypt").onclick = decryptText;
+    </script> 
 </body>
 </html>
