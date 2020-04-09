@@ -53,7 +53,7 @@
             var aesOfb = new aesjs.ModeOfOperation.ofb(key, iv);
             var decryptedBytes = aesOfb.decrypt(encryptedBytes);
             var decryptedText = aesjs.utils.hex.fromBytes(decryptedBytes);
-            console.log (decryptedText);
+            alert (decryptedText);
         }
 
         document.getElementById("decrypt").onclick = decryptText;
